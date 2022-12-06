@@ -65,10 +65,15 @@ class Login extends Component {
     }
   }
 
+  checkBoxSelected = event => {
+    this.setState({
+      isVisible: event.target.checked,
+    })
+  }
+
   render() {
-    const {username, password, hasError} = this.state
-    console.log(username)
-    console.log(password)
+    const {username, password, hasError, isVisible} = this.state
+    const passwordVisible = isVisible ? 'text' : 'password'
     return (
       <LoginContainer>
         <LoginCard>
@@ -86,13 +91,17 @@ class Login extends Component {
             />
             <CustomLabel htmlFor="password">PASSWORD</CustomLabel>
             <CustomInput
-              type="password"
+              type={passwordVisible}
               id="password"
               placeholder="PASSWORD"
               onChange={this.changePassword}
             />
             <CheckBoxContainer>
-              <CustomCheckbox type="checkbox" id="checkbox" />
+              <CustomCheckbox
+                type="checkbox"
+                id="checkbox"
+                onClick={this.checkBoxSelected}
+              />
               <Paragraph>Show Password</Paragraph>
             </CheckBoxContainer>
             <CustomButton type="submit">Login</CustomButton>
