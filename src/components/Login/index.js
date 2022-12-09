@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import Cookie from 'js-cookie'
 import {
   LoginContainer,
   LoginCard,
@@ -14,7 +15,13 @@ import {
 } from './styledComponent'
 
 class Login extends Component {
-  state = {username: '', password: '', isVisible: false, hasError: false}
+  state = {
+    username: '',
+    password: '',
+    errMsg: '',
+    isVisible: false,
+    hasError: false,
+  }
 
   changeUsername = event => {
     this.setState({
@@ -28,40 +35,49 @@ class Login extends Component {
     })
   }
 
-  loginFailure = () => {
+  loginFailure = msg => {
     this.setState({
       hasError: true,
+      errMsg: msg,
     })
+  }
+
+  LoginSuccessful = jwtToken => {
+    const {history} = this.props
+    Cookie.set('jwt_token', jwtToken)
+    history.replace('/')
   }
 
   loginSubmitted = async event => {
     event.preventDefault()
     const {username, password} = this.state
+    const loginApiUrl = 'https://apis.ccbp.in/login'
+    const userDetails = {username, password}
+    const options = {
+      method: 'POST',
+      body: JSON.stringify(userDetails),
+    }
+    const response = await fetch(loginApiUrl, options)
+    const data = await response.json()
+
     if (
       (username !== '' && password !== '') ||
       username !== '' ||
       password !== ''
     ) {
-      const loginApiUrl = 'https://apis.ccbp.in/login'
-      const userDetails = {username, password}
-      const options = {
-        method: 'POST',
-        body: JSON.stringify(userDetails),
-      }
-
-      const response = await fetch(loginApiUrl, options)
       if (response.ok) {
-        const data = await response.json()
         const jwtToken = data.jwt_token
         this.setState({
           hasError: false,
         })
         this.LoginSuccessful(jwtToken)
       } else {
-        this.loginFailure()
+        const msg = data.error_msg
+        this.loginFailure(msg)
       }
     } else {
-      this.loginFailure()
+      const msg = data.error_msg
+      this.loginFailure(msg)
     }
   }
 
@@ -72,7 +88,12 @@ class Login extends Component {
   }
 
   render() {
-    const {username, password, hasError, isVisible} = this.state
+    const {hasError, isVisible, errMsg, username, password} = this.state
+    const jwtToken = Cookie.get('jwt_token')
+    const {history} = this.props
+    if (jwtToken !== undefined) {
+      history.replace('/')
+    }
     const passwordVisible = isVisible ? 'text' : 'password'
     return (
       <LoginContainer>
@@ -87,6 +108,7 @@ class Login extends Component {
               type="text"
               id="username"
               placeholder="USERNAME"
+              value={username}
               onChange={this.changeUsername}
             />
             <CustomLabel htmlFor="password">PASSWORD</CustomLabel>
@@ -94,6 +116,7 @@ class Login extends Component {
               type={passwordVisible}
               id="password"
               placeholder="PASSWORD"
+              value={password}
               onChange={this.changePassword}
             />
             <CheckBoxContainer>
@@ -106,9 +129,7 @@ class Login extends Component {
             </CheckBoxContainer>
             <CustomButton type="submit">Login</CustomButton>
           </LoginForm>
-          {hasError && (
-            <CustomError>{`*Username and Password didn't match`}</CustomError>
-          )}
+          {hasError && <CustomError>*{errMsg}</CustomError>}
         </LoginCard>
       </LoginContainer>
     )

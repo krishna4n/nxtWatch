@@ -1,11 +1,15 @@
 import {Switch, Route} from 'react-router-dom'
 import './App.css'
 import Login from './components/Login'
+import ProtectedRoute from './components/ProtectedRoute'
+import Home from './components/Home'
+import Trending from './components/Trending'
 
-// Replace your code here
 const App = () => (
   <Switch>
-    <Route path="/login" component={Login} />
+    <Route exact path="/login" component={Login} />
+    <ProtectedRoute exact path="/fsdf" component={Home} />
+    <ProtectedRoute exact path="/trending" component={Trending} />
   </Switch>
 )
 
