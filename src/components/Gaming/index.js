@@ -1,31 +1,31 @@
 import {Component} from 'react'
 import Loader from 'react-loader-spinner'
 import Cookie from 'js-cookie'
-import {HiFire} from 'react-icons/hi'
+import {SiYoutubegaming} from 'react-icons/si'
 import {
-  TrendingContainer,
-  ContentContainer,
-  TrendingLogoContainer,
-  TrendingHeading,
+  GamingContainer,
   SidebarContainer,
-  TrendingLogo,
-  VideosViewContainer,
+  ContentContainer,
   FailedViewContainer,
-  FailedViewHeading,
-  FailedViewImage,
   FailedViewParagraph,
   FailedViewButton,
+  FailedViewHeading,
+  FailedViewImage,
   NoVideoContainer,
   NoVideoHeading,
   NoVideoImage,
   NoVideoParagraph,
+  TrendingHeading,
+  TrendingLogo,
+  TrendingLogoContainer,
+  VideosViewContainer,
 } from './styledComponents'
 import Header from '../Header'
 import SideNavbar from '../SideNavbar'
-import TrendingVideoDetails from '../TrendingVideoDetails'
+import GamingVideoDetails from '../GamingVideoDetails'
 
-class Trending extends Component {
-  state = {appStatus: 'LOADING', trendingVideosList: []}
+class Gaming extends Component {
+  state = {appStatus: 'LOADING', gamingVideosList: []}
 
   requestStatus = {
     success: 'SUCCESS',
@@ -40,27 +40,26 @@ class Trending extends Component {
 
   getApiData = async () => {
     const jwtToken = Cookie.get('jwt_token')
-    const trendingVideosApiUrl = 'https://apis.ccbp.in/videos/trending'
+    const trendingVideosApiUrl = 'https://apis.ccbp.in/videos/gaming'
     const options = {
       method: 'GET',
       headers: {Authorization: `Bearer ${jwtToken}`},
     }
     const response = await fetch(trendingVideosApiUrl, options)
     const data = await response.json()
+    console.log(data)
 
     if (response.ok) {
       if (data.videos.length > 0) {
         const videos = data.videos.map(each => ({
-          channel: each.channel,
           id: each.id,
-          publishedAt: each.published_at,
           thumbnailUrl: each.thumbnail_url,
           title: each.title,
           viewCount: each.view_count,
         }))
 
         this.setState({
-          trendingVideosList: videos,
+          gamingVideosList: videos,
           appStatus: this.requestStatus.success,
         })
       } else {
@@ -82,19 +81,19 @@ class Trending extends Component {
   )
 
   successView = () => {
-    const {trendingVideosList} = this.state
+    const {gamingVideosList} = this.state
 
     return (
       <>
         <TrendingLogoContainer>
           <TrendingLogo>
-            <HiFire color="#ff0000" size="22px" />
+            <SiYoutubegaming color="#ff0000" size="22px" />
           </TrendingLogo>
-          <TrendingHeading>Trending</TrendingHeading>
+          <TrendingHeading>Gaming</TrendingHeading>
         </TrendingLogoContainer>
         <VideosViewContainer>
-          {trendingVideosList.map(each => (
-            <TrendingVideoDetails key={each.id} video={each} />
+          {gamingVideosList.map(each => (
+            <GamingVideoDetails video={each} key={each.id} />
           ))}
         </VideosViewContainer>
       </>
@@ -149,15 +148,15 @@ class Trending extends Component {
     return (
       <>
         <Header />
-        <TrendingContainer data-testid="trending">
+        <GamingContainer>
           <SidebarContainer>
             <SideNavbar />
           </SidebarContainer>
           <ContentContainer>{this.renderingOptions()}</ContentContainer>
-        </TrendingContainer>
+        </GamingContainer>
       </>
     )
   }
 }
 
-export default Trending
+export default Gaming

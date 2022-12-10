@@ -10,11 +10,10 @@ export const BodyContainer = styled.div`
 `
 export const SidebarContainer = styled.div`
   padding: 0px 10px 10px 10px;
-  width: 15%;
+  width: 15vw;
 `
 
 export const DataContainer = styled.div`
-  height: 100vh;
   display: flex;
   flex-direction: column;
   padding: 0px 20px 20px 20px;
@@ -81,8 +80,7 @@ export const CustomGetItButton = styled.button`
   font-size: 8px;
 `
 export const DataViewContainer = styled.div`
-  height: 100vh;
-  width: 80vw;
+  width: 85vw;
   background-color: #f8fafc;
   padding: 10px;
   border-radius: 5px;
@@ -92,7 +90,7 @@ export const VideoDetailsContainer = styled.div`
   justify-content: center;
   flex-wrap: wrap;
 `
-export const SearchInputContainer = styled.button`
+export const SearchInputContainer = styled.div`
   align-self: flex-start;
   background-color: #ffffff;
   border-color: #94a3b8;
@@ -107,7 +105,11 @@ export const SearchInputContainer = styled.button`
 export const CustomSearch = styled.input`
   width: 220px;
   margin-right: 5px;
-  border: none;
   outline: none;
-  font-size: 10px;
+  font-size: 14px;
+`
+export const SearchButton = styled.button`
+background-color: transparent:
+outline:none;
+
 `

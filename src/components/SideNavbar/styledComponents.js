@@ -24,8 +24,8 @@ export const Sidebar = styled.div`
 `
 
 export const CustomLogo = styled.img`
-  padding: 10px;
-  height: 40px;
+  padding: 5px;
+  height: 30px;
 `
 export const ContactUsParagraph = styled.p`
   font-size: 11px;
@@ -33,7 +33,7 @@ export const ContactUsParagraph = styled.p`
 export const ContactUsHeading = styled.h5``
 
 export const LogosContainer = styled.div`
-  padding-right: 70px;
+  padding-right: 10px;
   display: flex;
 `
 

@@ -27,6 +27,7 @@ import {
   NoVideoImage,
   NoVideoHeading,
   NoVideoParagraph,
+  SearchButton,
 } from './styledComponents'
 import {CustomLogo, CustomImage} from '../Header/styledComponents'
 import VideoDetails from '../VideoDetails'
@@ -177,16 +178,17 @@ class Home extends Component {
               <CustomGetItButton>GET IT NOW</CustomGetItButton>
             </CustomBanner>
             <DataViewContainer>
-              <form onSubmit={this.onSearch}>
-                <SearchInputContainer
-                  type="button"
-                  value={searchInput}
-                  onChange={this.changeSearchInput}
-                >
-                  <CustomSearch type="search" placeholder="Search" />
+              <SearchInputContainer
+                type="button"
+                value={searchInput}
+                onChange={this.changeSearchInput}
+              >
+                <CustomSearch type="search" placeholder="Search" />
+                <SearchButton type="button" onClick={this.onSearch}>
                   <BiSearch />
-                </SearchInputContainer>
-              </form>
+                </SearchButton>
+              </SearchInputContainer>
+
               {this.renderingOptions()}
             </DataViewContainer>
           </DataContainer>

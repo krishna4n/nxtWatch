@@ -1,3 +1,4 @@
+import {Link} from 'react-router-dom'
 import {formatDistanceToNow} from 'date-fns'
 import {
   VideoItemContainer,
@@ -19,22 +20,24 @@ const VideoDetails = props => {
   }
   const {name, profileImageUrl} = channelData
   return (
-    <VideoItemContainer>
-      <ThumbnailContainer src={thumbnailUrl} alt="" />
-      <VideoInfoContainer>
-        <VideoProfileImage src={profileImageUrl} alt={name} />
-        <VideoTextContainer>
-          <VideoInfoParagraph>{title}</VideoInfoParagraph>
-          <VideoViewsParagraph>{name}</VideoViewsParagraph>
-          <VideoViewsContainer>
-            <VideoViewsParagraph>{viewCount} views</VideoViewsParagraph>
-            <VideoViewsParagraph>
-              &#x2022; {formatDistanceToNow(new Date(publishedAt))}
-            </VideoViewsParagraph>
-          </VideoViewsContainer>
-        </VideoTextContainer>
-      </VideoInfoContainer>
-    </VideoItemContainer>
+    <Link to={`/videos/${id}`}>
+      <VideoItemContainer>
+        <ThumbnailContainer src={thumbnailUrl} alt="" />
+        <VideoInfoContainer>
+          <VideoProfileImage src={profileImageUrl} alt={name} />
+          <VideoTextContainer>
+            <VideoInfoParagraph>{title}</VideoInfoParagraph>
+            <VideoViewsParagraph>{name}</VideoViewsParagraph>
+            <VideoViewsContainer>
+              <VideoViewsParagraph>{viewCount} views</VideoViewsParagraph>
+              <VideoViewsParagraph>
+                &#x2022; {formatDistanceToNow(new Date(publishedAt))}
+              </VideoViewsParagraph>
+            </VideoViewsContainer>
+          </VideoTextContainer>
+        </VideoInfoContainer>
+      </VideoItemContainer>
+    </Link>
   )
 }
 

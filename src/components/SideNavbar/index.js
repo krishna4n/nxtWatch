@@ -1,6 +1,7 @@
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {AiFillHome} from 'react-icons/ai'
 import {SiTrendmicro, SiYoutubegaming} from 'react-icons/si'
+import {HiFire} from 'react-icons/hi'
 import {CgPlayListAdd} from 'react-icons/cg'
 import {
   SidebarMenu,
@@ -23,20 +24,28 @@ const SideNavbar = props => {
       <SidebarMenu>
         <SidebarLink>
           <AiFillHome size="12" />
-          <Paragraph>Home</Paragraph>
+          <Paragraph>
+            <Link to="/">Home</Link>
+          </Paragraph>
         </SidebarLink>
         <SidebarLink>
-          <SiTrendmicro size="12" />
-          <Paragraph>Trending</Paragraph>
+          <HiFire size="12" />
+          <Paragraph>
+            <Link to="/trending">Trending</Link>
+          </Paragraph>
         </SidebarLink>
-        <SidebarLink>
-          <SiYoutubegaming size="12" />
-          <Paragraph>Gaming</Paragraph>
-        </SidebarLink>
-        <SidebarLink>
-          <CgPlayListAdd size="12" />
-          <Paragraph>Saved videos</Paragraph>
-        </SidebarLink>
+        <Link to="/gaming">
+          <SidebarLink>
+            <SiYoutubegaming size="12" />
+            <Paragraph>Gaming</Paragraph>
+          </SidebarLink>
+        </Link>
+        <Link to="/saved-videos">
+          <SidebarLink>
+            <CgPlayListAdd size="12" />
+            <Paragraph>Saved videos</Paragraph>
+          </SidebarLink>
+        </Link>
       </SidebarMenu>
       <ContactUsContainer>
         <ContactUsHeading>CONTACT US</ContactUsHeading>

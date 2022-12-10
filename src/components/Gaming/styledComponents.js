@@ -1,7 +1,12 @@
 import styled from 'styled-components'
 
-export const TrendingContainer = styled.div`
+export const GamingContainer = styled.div`
   display: flex;
+`
+
+export const SidebarContainer = styled.div`
+  padding: 0px 10px 10px 10px;
+  width: 15vw;
 `
 
 export const ContentContainer = styled.div`
@@ -11,6 +16,9 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   padding: 0px 20px 20px 20px;
 `
+export const TrendingContainer = styled.div`
+  display: flex;
+`
 
 export const TrendingLogoContainer = styled.div`
   background-color: #f4f4f4;
@@ -19,10 +27,6 @@ export const TrendingLogoContainer = styled.div`
   padding: 10px;
   padding-left: 40px;
   border-radius: 5px;
-`
-export const SidebarContainer = styled.div`
-  padding: 0px 10px 10px 10px;
-  width: 15vw;
 `
 export const TrendingHeading = styled.h2`
   margin-left: 10px;
@@ -35,9 +39,12 @@ export const TrendingLogo = styled.div`
   background-color: #e2e8f0;
 `
 export const VideosViewContainer = styled.div`
+  background-color: #f8fafc;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-wrap: wrap;
+  padding: 60px;
 `
 
 export const FailedViewContainer = styled.div`
