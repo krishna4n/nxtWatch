@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom'
 import {
   TrendingVideoDetailsContainer,
   CustomImage,
-  VideoDetailsHeading,
   VideoDetailsParagraph,
   VideoDetailsViewContainer,
   DetailsViewParagraph,
@@ -16,14 +15,14 @@ const TrendingVideoDetails = props => {
     name: channel.name,
     profileImageUrl: channel.profile_image_url,
   }
-  const {profileImageUrl, name} = channelList
+  const {name} = channelList
   console.log(video)
   return (
     <Link to={`/videos/${id}`}>
       <TrendingVideoDetailsContainer>
-        <CustomImage src={thumbnailUrl} alt={name} />
+        <CustomImage src={thumbnailUrl} alt="video thumbnail" />
         <VideoDetailsContainer>
-          <VideoDetailsHeading>{title}</VideoDetailsHeading>
+          <VideoDetailsParagraph>{title}</VideoDetailsParagraph>
           <VideoDetailsParagraph>{name}</VideoDetailsParagraph>
           <VideoDetailsViewContainer>
             <DetailsViewParagraph>{viewCount} views</DetailsViewParagraph>

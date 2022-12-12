@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const VideoItemContainer = styled.div`
+export const VideoItemContainer = styled.li`
   display: flex;
   flex-direction: column;
   margin: 10px;

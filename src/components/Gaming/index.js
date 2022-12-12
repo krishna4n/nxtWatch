@@ -104,13 +104,13 @@ class Gaming extends Component {
     <FailedViewContainer>
       <FailedViewImage
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt=""
+        alt="failure view"
       />
       <FailedViewHeading>Oops! Something Went Wrong</FailedViewHeading>
       <FailedViewParagraph>
         We are having some trouble to complete your request. Please try again.
       </FailedViewParagraph>
-      <FailedViewButton>Retry</FailedViewButton>
+      <FailedViewButton onClick={this.getApiData}>Retry</FailedViewButton>
     </FailedViewContainer>
   )
 
@@ -124,7 +124,7 @@ class Gaming extends Component {
       <NoVideoParagraph>
         Try different key words or remove filter
       </NoVideoParagraph>
-      <FailedViewButton>Retry</FailedViewButton>
+      <FailedViewButton onClick={this.getApiData}>Retry</FailedViewButton>
     </NoVideoContainer>
   )
 
@@ -148,7 +148,7 @@ class Gaming extends Component {
     return (
       <>
         <Header />
-        <GamingContainer>
+        <GamingContainer data-testid="gaming">
           <SidebarContainer>
             <SideNavbar />
           </SidebarContainer>

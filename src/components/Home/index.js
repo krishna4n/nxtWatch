@@ -29,9 +29,11 @@ import {
   NoVideoParagraph,
   SearchButton,
 } from './styledComponents'
-import {CustomLogo, CustomImage} from '../Header/styledComponents'
+import {CustomImage} from '../Header/styledComponents'
 import VideoDetails from '../VideoDetails'
 import SideNavbar from '../SideNavbar'
+import {CustomButton} from '../Login/styledComponent'
+import SaveContext from '../Context/SaveContext'
 
 class Home extends Component {
   state = {videosList: [], isLoading: 'LOADING', searchInput: ''}
@@ -40,7 +42,7 @@ class Home extends Component {
     success: 'SUCCESS',
     failed: 'FAILED',
     loading: 'LOADING',
-    novideos: 'NOVIDEOS',
+    noVideos: 'NO-VIDEOS',
   }
 
   componentDidMount() {
@@ -62,13 +64,13 @@ class Home extends Component {
     <FailedViewContainer>
       <FailedViewImage
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt=""
+        alt="failure view"
       />
       <FailedViewHeading>Oops! Something Went Wrong</FailedViewHeading>
       <FailedViewParagraph>
         We are having some trouble to complete your request. Please try again.
       </FailedViewParagraph>
-      <FailedViewButton>Retry</FailedViewButton>
+      <FailedViewButton onClick={this.getVideosUrl}>Retry</FailedViewButton>
     </FailedViewContainer>
   )
 
@@ -82,13 +84,13 @@ class Home extends Component {
     <NoVideoContainer>
       <NoVideoImage
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
-        alt="no video"
+        alt="no videos"
       />
       <NoVideoHeading>No Search results found</NoVideoHeading>
       <NoVideoParagraph>
-        Try different key words or remove filter
+        Try different key words or remove search filter
       </NoVideoParagraph>
-      <FailedViewButton>Retry</FailedViewButton>
+      <FailedViewButton onClick={this.getVideosUrl}>Retry</FailedViewButton>
     </NoVideoContainer>
   )
 
@@ -105,20 +107,26 @@ class Home extends Component {
     const response = await fetch(homeVideosApiUrl, options)
     if (response.ok) {
       const data = await response.json()
-      console.log(data)
-      const videos = data.videos.map(each => ({
-        id: each.id,
-        channel: each.channel,
-        publishedAt: each.published_at,
-        thumbnailUrl: each.thumbnail_url,
-        title: each.title,
-        viewCount: each.view_count,
-      }))
+      if (data.videos.length > 0) {
+        console.log(data)
+        const videos = data.videos.map(each => ({
+          id: each.id,
+          channel: each.channel,
+          publishedAt: each.published_at,
+          thumbnailUrl: each.thumbnail_url,
+          title: each.title,
+          viewCount: each.view_count,
+        }))
 
-      this.setState({
-        videosList: videos,
-        isLoading: this.appStatus.success,
-      })
+        this.setState({
+          videosList: videos,
+          isLoading: this.appStatus.success,
+        })
+      } else {
+        this.setState({
+          isLoading: this.appStatus.noVideos,
+        })
+      }
     } else {
       this.setState({
         isLoading: this.appStatus.failed,
@@ -135,7 +143,8 @@ class Home extends Component {
         return this.renderVideosView()
       case this.appStatus.failed:
         return this.renderFailedView()
-      case this.appStatus.novideos:
+      case this.appStatus.noVideos:
+        console.log('no videos')
         return this.renderNoVideosView()
 
       default:
@@ -156,44 +165,59 @@ class Home extends Component {
 
   render() {
     const {searchInput} = this.state
-    return (
-      <HomeContainer data-testid="home">
-        <Header />
-        <BodyContainer>
-          <SidebarContainer>
-            <SideNavbar />
-          </SidebarContainer>
-          <DataContainer>
-            <CustomBanner>
-              <CustomBannerLogoContainer>
-                <CustomImage
-                  src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-                  alt="nxt watch logo"
-                />
-                <MdClose data-testid="close" />
-              </CustomBannerLogoContainer>
-              <CustomBannerParagraph>
-                Buy Nxt Watch Premium prepaid plans with UPI
-              </CustomBannerParagraph>
-              <CustomGetItButton>GET IT NOW</CustomGetItButton>
-            </CustomBanner>
-            <DataViewContainer>
-              <SearchInputContainer
-                type="button"
-                value={searchInput}
-                onChange={this.changeSearchInput}
-              >
-                <CustomSearch type="search" placeholder="Search" />
-                <SearchButton type="button" onClick={this.onSearch}>
-                  <BiSearch />
-                </SearchButton>
-              </SearchInputContainer>
 
-              {this.renderingOptions()}
-            </DataViewContainer>
-          </DataContainer>
-        </BodyContainer>
-      </HomeContainer>
+    return (
+      <SaveContext.Consumer>
+        {value => {
+          const {darkTheme} = value
+          const bgColor = darkTheme ? '#181818' : '#f9f9f9'
+          return (
+            <HomeContainer data-testid="home">
+              <Header />
+              <BodyContainer>
+                <SidebarContainer>
+                  <SideNavbar />
+                </SidebarContainer>
+                <DataContainer>
+                  <CustomBanner data-testid="banner">
+                    <CustomBannerLogoContainer>
+                      <CustomImage
+                        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                        alt="nxt watch logo"
+                      />
+                      <CustomButton type="button" data-testid="close">
+                        <MdClose />
+                      </CustomButton>
+                    </CustomBannerLogoContainer>
+                    <CustomBannerParagraph>
+                      Buy Nxt Watch Premium prepaid plans with UPI
+                    </CustomBannerParagraph>
+                    <CustomGetItButton>GET IT NOW</CustomGetItButton>
+                  </CustomBanner>
+                  <DataViewContainer bgColor={bgColor}>
+                    <SearchInputContainer
+                      type="button"
+                      value={searchInput}
+                      onChange={this.changeSearchInput}
+                    >
+                      <CustomSearch type="search" placeholder="Search" />
+                      <SearchButton
+                        type="button"
+                        onClick={this.onSearch}
+                        data-testid="searchButton"
+                      >
+                        <BiSearch />
+                      </SearchButton>
+                    </SearchInputContainer>
+
+                    {this.renderingOptions()}
+                  </DataViewContainer>
+                </DataContainer>
+              </BodyContainer>
+            </HomeContainer>
+          )
+        }}
+      </SaveContext.Consumer>
     )
   }
 }

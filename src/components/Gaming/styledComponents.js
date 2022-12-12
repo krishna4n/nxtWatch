@@ -38,13 +38,12 @@ export const TrendingLogo = styled.div`
   border-radius: 40px;
   background-color: #e2e8f0;
 `
-export const VideosViewContainer = styled.div`
+export const VideosViewContainer = styled.ul`
+  list-style-type: none;
   background-color: #f8fafc;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  padding: 60px;
 `
 
 export const FailedViewContainer = styled.div`

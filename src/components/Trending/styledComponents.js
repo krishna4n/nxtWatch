@@ -5,6 +5,7 @@ export const TrendingContainer = styled.div`
 `
 
 export const ContentContainer = styled.div`
+  background-color: ${props => props.bgColor};
   align-self: flex-start;
   width: 85vw;
   display: flex;
@@ -34,10 +35,8 @@ export const TrendingLogo = styled.div`
   border-radius: 40px;
   background-color: #e2e8f0;
 `
-export const VideosViewContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+export const VideosViewContainer = styled.ul`
+  list-style-type: none;
 `
 
 export const FailedViewContainer = styled.div`

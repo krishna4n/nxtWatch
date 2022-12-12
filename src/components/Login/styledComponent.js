@@ -74,7 +74,7 @@ export const InputContainer = styled.div`
   justify-content: center;
   align-items: center;
 `
-export const CustomError = styled.span`
+export const CustomError = styled.p`
   align-self: flex-start;
   margin-left: 10px;
   color: #ff0000;

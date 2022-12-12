@@ -22,9 +22,9 @@ const VideoDetails = props => {
   return (
     <Link to={`/videos/${id}`}>
       <VideoItemContainer>
-        <ThumbnailContainer src={thumbnailUrl} alt="" />
+        <ThumbnailContainer src={thumbnailUrl} alt="video thumbnail" />
         <VideoInfoContainer>
-          <VideoProfileImage src={profileImageUrl} alt={name} />
+          <VideoProfileImage src={profileImageUrl} alt="channel logo" />
           <VideoTextContainer>
             <VideoInfoParagraph>{title}</VideoInfoParagraph>
             <VideoViewsParagraph>{name}</VideoViewsParagraph>

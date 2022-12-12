@@ -2,7 +2,6 @@ import {Link} from 'react-router-dom'
 import {
   VideoDetailsContainer,
   VideoDetailsImage,
-  VideoDetailsHeading,
   VideoDetailsParagraph,
 } from './styledComponents'
 
@@ -13,8 +12,8 @@ const GamingVideoDetails = props => {
   return (
     <Link to={`/videos/${id}`}>
       <VideoDetailsContainer>
-        <VideoDetailsImage src={thumbnailUrl} alt={title} />
-        <VideoDetailsHeading>{title}</VideoDetailsHeading>
+        <VideoDetailsImage src={thumbnailUrl} alt="video thumbnail" />
+        <VideoDetailsParagraph>{title}</VideoDetailsParagraph>
         <VideoDetailsParagraph>{viewCount} World Wide</VideoDetailsParagraph>
       </VideoDetailsContainer>
     </Link>

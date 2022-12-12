@@ -23,6 +23,7 @@ import {
 import Header from '../Header'
 import SideNavbar from '../SideNavbar'
 import TrendingVideoDetails from '../TrendingVideoDetails'
+import SaveContext from '../Context/SaveContext'
 
 class Trending extends Component {
   state = {appStatus: 'LOADING', trendingVideosList: []}
@@ -94,7 +95,11 @@ class Trending extends Component {
         </TrendingLogoContainer>
         <VideosViewContainer>
           {trendingVideosList.map(each => (
-            <TrendingVideoDetails key={each.id} video={each} />
+            <TrendingVideoDetails
+              key={each.id}
+              video={each}
+              text="Trending Videos"
+            />
           ))}
         </VideosViewContainer>
       </>
@@ -105,13 +110,13 @@ class Trending extends Component {
     <FailedViewContainer>
       <FailedViewImage
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt=""
+        alt="failure view"
       />
       <FailedViewHeading>Oops! Something Went Wrong</FailedViewHeading>
       <FailedViewParagraph>
         We are having some trouble to complete your request. Please try again.
       </FailedViewParagraph>
-      <FailedViewButton>Retry</FailedViewButton>
+      <FailedViewButton onClick={this.getApiData}>Retry</FailedViewButton>
     </FailedViewContainer>
   )
 
@@ -147,15 +152,26 @@ class Trending extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <TrendingContainer data-testid="trending">
-          <SidebarContainer>
-            <SideNavbar />
-          </SidebarContainer>
-          <ContentContainer>{this.renderingOptions()}</ContentContainer>
-        </TrendingContainer>
-      </>
+      <SaveContext.Consumer>
+        {value => {
+          const {darkTheme} = value
+
+          const bgColor = darkTheme ? '#181818' : '#f9f9f9'
+          return (
+            <div data-testid="trending">
+              <Header />
+              <TrendingContainer>
+                <SidebarContainer>
+                  <SideNavbar />
+                </SidebarContainer>
+                <ContentContainer bgColor={bgColor}>
+                  {this.renderingOptions()}
+                </ContentContainer>
+              </TrendingContainer>
+            </div>
+          )
+        }}
+      </SaveContext.Consumer>
     )
   }
 }

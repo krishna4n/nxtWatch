@@ -5,11 +5,18 @@ import Loader from 'react-loader-spinner'
 
 import {BiLike, BiDislike, BiListPlus} from 'react-icons/bi'
 import Header from '../Header'
-import {TrendingContainer, SidebarContainer} from '../Trending/styledComponents'
+import {
+  TrendingContainer,
+  SidebarContainer,
+  FailedViewContainer,
+  FailedViewImage,
+  FailedViewHeading,
+  FailedViewParagraph,
+  FailedViewButton,
+} from '../Trending/styledComponents'
 import SideNavbar from '../SideNavbar'
 import {
   VideoItemDetailsContainer,
-  CustomHeading,
   ViewsContainer,
   ViewParagraph,
   SpecialIconsContainer,
@@ -27,7 +34,6 @@ class VideoItemDetails extends Component {
     videosList: [],
     like: false,
     unlike: false,
-    saved: 'false',
     updatedList: [],
   }
 
@@ -50,12 +56,11 @@ class VideoItemDetails extends Component {
   successView = () => (
     <SaveContext.Consumer>
       {value => {
-        const {videosList, like, unlike, saved, updatedList} = this.state
+        const {videosList, like, unlike, save} = this.state
         const likeColor = like ? '#2563eb' : '#64748b'
         const unlikeColor = unlike ? '#2563eb' : '#64748b'
 
         const {
-          id,
           channel,
           description,
           publishedAt,
@@ -73,13 +78,19 @@ class VideoItemDetails extends Component {
         const {name, profileImageUrl, subscriberCount} = channelData
         const {updateSavedList} = value
         const onUpdateSavedList = () => {
+          this.setState(prevState => ({
+            save: !prevState.save,
+          }))
           updateSavedList(videosList)
         }
 
+        const saveText = save ? 'Saved' : 'Save'
+        const saveColor = save ? '#2563eb' : '#64748b'
+
         return (
-          <VideoItemDetailsContainer>
+          <VideoItemDetailsContainer data-testid="videoItemDetails">
             <ReactPlayer url={videoUrl} width="75vw" />
-            <CustomHeading>{title}</CustomHeading>
+            <Paragraph>{title}</Paragraph>
             <ViewsContainer>
               <ViewParagraph>
                 {viewCount} views . {publishedAt}
@@ -93,16 +104,16 @@ class VideoItemDetails extends Component {
                   <BiDislike />
                   Dislike
                 </CustomButton>
-                <CustomButton id={id} onClick={onUpdateSavedList}>
+                <CustomButton onClick={onUpdateSavedList} color={saveColor}>
                   <BiListPlus />
-                  Save
+                  {saveText}
                 </CustomButton>
               </SpecialIconsContainer>
             </ViewsContainer>
             <GroupContainer>
-              <CustomImage src={profileImageUrl} alt={name} />
+              <CustomImage src={profileImageUrl} alt="channel logo" />
               <GroupDetailsContainer>
-                <CustomHeading>{name}</CustomHeading>
+                <Paragraph>{name}</Paragraph>
                 <Paragraph>{subscriberCount} subscribers</Paragraph>
                 <Paragraph>{description}</Paragraph>
               </GroupDetailsContainer>
@@ -133,9 +144,19 @@ class VideoItemDetails extends Component {
     }))
   }
 
-  failedView = () => {
-    console.log('failed')
-  }
+  failedView = () => (
+    <FailedViewContainer>
+      <FailedViewImage
+        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+        alt="failure view"
+      />
+      <FailedViewHeading>Oops! Something Went Wrong</FailedViewHeading>
+      <FailedViewParagraph>
+        We are having some trouble to complete your request. Please try again.
+      </FailedViewParagraph>
+      <FailedViewButton onClick={this.getApiData}>Retry</FailedViewButton>
+    </FailedViewContainer>
+  )
 
   getApiData = async () => {
     const {match} = this.props

@@ -9,7 +9,6 @@ import {
   CustomButton,
   LoginForm,
   CheckBoxContainer,
-  Paragraph,
   CustomCheckbox,
   CustomError,
 } from './styledComponent'
@@ -44,7 +43,7 @@ class Login extends Component {
 
   LoginSuccessful = jwtToken => {
     const {history} = this.props
-    Cookie.set('jwt_token', jwtToken)
+    Cookie.set('jwt_token', jwtToken, {expires: 30})
     history.replace('/')
   }
 
@@ -95,12 +94,13 @@ class Login extends Component {
       history.replace('/')
     }
     const passwordVisible = isVisible ? 'text' : 'password'
+    const checked = isVisible
     return (
       <LoginContainer>
         <LoginCard>
           <LoginLogo
             src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-            alt="logo"
+            alt="website logo"
           />
           <LoginForm onSubmit={this.loginSubmitted}>
             <CustomLabel htmlFor="username">USERNAME</CustomLabel>
@@ -124,8 +124,9 @@ class Login extends Component {
                 type="checkbox"
                 id="checkbox"
                 onClick={this.checkBoxSelected}
+                checked={checked}
               />
-              <Paragraph>Show Password</Paragraph>
+              <CustomLabel id="checkbox">Show Password</CustomLabel>
             </CheckBoxContainer>
             <CustomButton type="submit">Login</CustomButton>
           </LoginForm>

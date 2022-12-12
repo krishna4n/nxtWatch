@@ -1,5 +1,5 @@
 import {Component} from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, Redirect} from 'react-router-dom'
 import './App.css'
 import Login from './components/Login'
 import ProtectedRoute from './components/ProtectedRoute'
@@ -9,24 +9,34 @@ import Game from './components/Gaming'
 import VideoItemDetails from './components/VideoItemDetails'
 import SaveContext from './components/Context/SaveContext'
 import SavedVideos from './components/SavedVideos'
+import NotFound from './components/NotFound'
 
 class App extends Component {
-  state = {savedList: []}
+  state = {savedList: [], darkTheme: false}
 
   updateSavedList = savedData => {
-    console.log('app', savedData)
     this.setState(prevState => ({
       savedList: [...prevState.savedList, savedData],
     }))
   }
 
+  updateTheme = () => {
+    console.log('theme clicked')
+    this.setState(prevState => ({
+      darkTheme: !prevState.darkTheme,
+    }))
+  }
+
   render() {
-    const {savedList} = this.state
+    const {savedList, darkTheme} = this.state
+    console.log('darkTheme', darkTheme)
     return (
       <SaveContext.Provider
         value={{
           savedList,
+          darkTheme,
           updateSavedList: this.updateSavedList,
+          updateTheme: this.updateTheme,
         }}
       >
         <Switch>
@@ -36,6 +46,8 @@ class App extends Component {
           <ProtectedRoute exact path="/gaming" component={Game} />
           <ProtectedRoute path="/videos/:id" component={VideoItemDetails} />
           <ProtectedRoute exact path="/saved-videos" component={SavedVideos} />
+          <Route exact path="/bad-path" component={NotFound} />
+          <Redirect to="/bad-path" />
         </Switch>
       </SaveContext.Provider>
     )

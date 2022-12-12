@@ -81,13 +81,14 @@ export const CustomGetItButton = styled.button`
 `
 export const DataViewContainer = styled.div`
   width: 85vw;
-  background-color: #f8fafc;
+  background-color: ${props => props.bgColor};
   padding: 10px;
   border-radius: 5px;
 `
-export const VideoDetailsContainer = styled.div`
+export const VideoDetailsContainer = styled.ul`
+  list-style-type: none;
   display: flex;
-  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
 `
 export const SearchInputContainer = styled.div`

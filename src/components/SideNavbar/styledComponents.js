@@ -16,6 +16,7 @@ export const SidebarLink = styled.div`
 `
 
 export const Sidebar = styled.div`
+  background-color: ${props => props.bgColor};
   height: 90vh;
   display: flex;
   flex-direction: column;

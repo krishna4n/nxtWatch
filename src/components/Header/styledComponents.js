@@ -1,12 +1,19 @@
 import styled from 'styled-components'
 
 export const NavContainer = styled.nav`
+  background-color: ${props => props.bgColor};
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
   padding-left: 40px;
   padding-right: 40px;
+`
+export const PopupContainer = styled.div`
+  background-color: #ffffff;
+  height: 100px;
+  padding: 10px;
+  border-radius: 10px;
 `
 export const CustomLogo = styled.img`
   height: 25px;
@@ -37,6 +44,7 @@ export const CustomButton = styled.button`
   border-radius: 5px;
   outline: none;
   font-size: 12px;
+  margin-right: 10px;
 `
 export const CustomImage = styled.img`
   height: 22px;

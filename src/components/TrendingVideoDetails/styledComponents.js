@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const TrendingVideoDetailsContainer = styled.div`
+export const TrendingVideoDetailsContainer = styled.li`
   width: 90vw;
   display: flex;
   align-items: center;
