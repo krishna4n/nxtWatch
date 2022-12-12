@@ -79,7 +79,7 @@ const Header = props => (
                       className="trigger-button"
                       onClick={() => close()}
                     >
-                      Close
+                      Cancel
                     </CustomButton>
                   </PopupContainer>
                 )}
